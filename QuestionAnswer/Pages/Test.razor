@@ -1,4 +1,4 @@
-﻿@page "/test"
+﻿@page "/"
 <head>
     <style>
         .image_contain {
@@ -80,8 +80,8 @@
             }
         </div>
         <div class="row button_design">
-            <button class="btn btn-dark" @onclick="prevData" disabled="@arrowUp">Arrow Up</button>
-            <button class="btn btn-dark" @onclick="nextData" disabled="@arrowDown">Arrow Down</button>
+            <button class="btn btn-dark" @onclick="prevData" disabled="@arrowUp"><i class="fas fa-arrow-up"></i></button>
+            <button class="btn btn-dark" @onclick="nextData" disabled="@arrowDown"><i class="fas fa-arrow-down"></i></button>
         </div>
     </div>
 
