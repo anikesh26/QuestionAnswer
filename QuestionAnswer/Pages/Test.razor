@@ -70,10 +70,10 @@
 </head>
 <body>
     <div class="container-fluid image_contain">
-        <div class="row question_tag"  @onwheel="MouseWheelEventHandler">
+        <div class="row question_tag">
             <div class="col-12"><h3>@arr[count].Question</h3></div>
-            <div class="col-12"><p class="button1" @onclick="() => nextQuestion(count)">@arr[count].answer1</p></div>
-            <div class="col-12"><p class="button2" @onclick="() => nextQuestion(count)">@arr[count].answer2</p></div>
+            <div class="col-12"><p class="button1" @onclick="nextQuestion">@arr[count].answer1</p></div>
+            <div class="col-12"><p class="button2" @onclick="nextQuestion">@arr[count].answer2</p></div>
             @if (count > 1)
             {
             <div class="col-12 " id="activeSubmit"><button class="btn btn-success">Submit</button></div>
@@ -121,8 +121,6 @@
     }
     private void nextData()
     {
-        Console.WriteLine(arr);
-        Console.WriteLine(arr.Count);
         if (count < arr.Count - 1)
         {
             arrowUp = false;
@@ -130,31 +128,19 @@
             arrowDown = count == 2 ? true : false;
         }
     }
-    private void nextQuestion(int count)
+    private void nextQuestion()
     {
-        Console.WriteLine(count);
-        Console.WriteLine(arr.Count);
-        if (count == arr.Count - 1)
-        {
-            displaySubmit = true;
-        }
-        else
+        if (count < arr.Count - 1)
         {
             count++;
             displaySubmit = false;
+            arrowUp = false;
+            arrowDown = count == 2 ? true : false;
+        }
+        else
+        {
+            displaySubmit = true;
         }
     }
-    private void MouseWheelEventHandler()
-    {
-        Console.WriteLine(count);
-        if (count < arr.Count - 1)
-        {
 
-            System.Console.WriteLine("Scroll");
-            count++;
-        } else if(count > 0)
-        {
-            count--;
-        }
-    }
 }
