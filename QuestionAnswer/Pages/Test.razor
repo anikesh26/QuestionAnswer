@@ -1,0 +1,160 @@
+﻿@page "/test"
+<head>
+    <style>
+        .image_contain {
+            background-image: url(https://images.typeform.com/images/EjjYqKZQV3ex/background/large);
+            background-position: center top;
+            background-size: cover;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            display: inline-block;
+            z-index: 999;
+            line-height: 0;
+            opacity: 1;
+            background-color: rgb(97, 146, 100);
+            color: white;
+        }
+
+        .row {
+            text-align: center;
+        }
+
+        .button_design {
+            justify-content: flex-end;
+        }
+
+        button {
+            margin-right: 20px;
+        }
+
+        .question_tag {
+            height: 700px;
+            align-content: center;
+            justify-content: center;
+            text-align: left;
+            max-width: 70%;
+            margin: auto;
+        }
+
+        .button1 {
+            border: 2px solid;
+            padding: 15px 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            max-width: 50%;
+        }
+
+        .button2 {
+            border: 2px solid;
+            padding: 15px 12px;
+            border-radius: 5px;
+            max-width: 50%;
+        }
+
+        .button1:hover {
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .button2:hover {
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        .hide_button {
+            display:none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid image_contain">
+        <div class="row question_tag"  @onwheel="MouseWheelEventHandler">
+            <div class="col-12"><h3>@arr[count].Question</h3></div>
+            <div class="col-12"><p class="button1" @onclick="() => nextQuestion(count)">@arr[count].answer1</p></div>
+            <div class="col-12"><p class="button2" @onclick="() => nextQuestion(count)">@arr[count].answer2</p></div>
+            @if (count > 1)
+            {
+            <div class="col-12 " id="activeSubmit"><button class="btn btn-success">Submit</button></div>
+            }
+        </div>
+        <div class="row button_design">
+            <button class="btn btn-dark" @onclick="prevData" disabled="@arrowUp">Arrow Up</button>
+            <button class="btn btn-dark" @onclick="nextData" disabled="@arrowDown">Arrow Down</button>
+        </div>
+    </div>
+
+</body>
+@code {
+    public class arrayData
+    {
+        public String Question { get; set; }
+        public String answer1 { get; set; }
+        public String answer2 { get; set; }
+    }
+    public class RootObject
+    {
+        public List<arrayData> items { get; set; }
+    }
+
+    static List<arrayData> arr = new List<arrayData>
+{
+    new arrayData { Question = "What's the craic? means..", answer1 = "Where is the crack?", answer2 = "What's up?"},
+    new arrayData { Question = "You go to the pub on a Wednesday just for one. Do you...", answer1 = "A Just have one, got a big day at work tomorrow.", answer2 = "Uh oh... It's gonna be a loooong night!"},
+    new arrayData { Question = "Which of the following isn't a famous Irish brewery?", answer1 = "Guinness", answer2 = "Carlsberg"}
+};
+
+    public int count = 0;
+    public bool arrowUp = true;
+    public bool arrowDown = false;
+    public bool displaySubmit = false;
+    private void prevData()
+    {
+        if (count > 0)
+        {
+            arrowDown = false;
+            count--;
+            arrowUp = count == 0 ? true : false;
+        }
+
+    }
+    private void nextData()
+    {
+        Console.WriteLine(arr);
+        Console.WriteLine(arr.Count);
+        if (count < arr.Count - 1)
+        {
+            arrowUp = false;
+            count++;
+            arrowDown = count == 2 ? true : false;
+        }
+    }
+    private void nextQuestion(int count)
+    {
+        Console.WriteLine(count);
+        Console.WriteLine(arr.Count);
+        if (count == arr.Count - 1)
+        {
+            displaySubmit = true;
+        }
+        else
+        {
+            count++;
+            displaySubmit = false;
+        }
+    }
+    private void MouseWheelEventHandler()
+    {
+        Console.WriteLine(count);
+        if (count < arr.Count - 1)
+        {
+
+            System.Console.WriteLine("Scroll");
+            count++;
+        } else if(count > 0)
+        {
+            count--;
+        }
+    }
+}
